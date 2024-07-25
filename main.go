@@ -1,12 +1,8 @@
 package main
 
 import (
-	"cloud.google.com/go/bigquery"
-	"context"
 	"fmt"
-	"log"
 	"math/rand"
-	"os"
 	"time"
 )
 
@@ -18,39 +14,40 @@ type LogEntry struct {
 }
 
 func main() {
-	ctx := context.Background()
-
-	// Create a BigQuery client using default credentials
-	client, err := bigquery.NewClient(ctx, os.Getenv("PROJECT"))
-	if err != nil {
-		log.Fatalf("Failed to create BigQuery client: %v", err)
-	}
-	defer client.Close()
-
-	datasetID := os.Getenv("DATASET")
-	tableID := os.Getenv("TABLE")
-	table := client.Dataset(datasetID).Table(tableID)
-
-	// Create a channel to receive log entries
-	logChannel := make(chan LogEntry)
-
-	// Start a Go routine to process logs from the channel
-	go func() {
-		for logEntry := range logChannel {
-			// Insert the log entry into BigQuery
-			inserter := table.Inserter()
-			if err := inserter.Put(ctx, logEntry); err != nil {
-				log.Printf("Failed to insert log into BigQuery: %v", err)
-			} else {
-				fmt.Println("Log uploaded to BigQuery successfully!")
-			}
-		}
-	}()
-	// Simulate infinite log generation
-	go generateLogs(logChannel)
-
-	// Prevent the main function from exiting
-	select {}
+	CreateDatasetAndTable()
+	//ctx := context.Background()
+	//
+	//// Create a BigQuery client using default credentials
+	//client, err := bigquery.NewClient(ctx, os.Getenv("PROJECT"))
+	//if err != nil {
+	//	log.Fatalf("Failed to create BigQuery client: %v", err)
+	//}
+	//defer client.Close()
+	//
+	//datasetID := os.Getenv("DATASET")
+	//tableID := os.Getenv("TABLE")
+	//table := client.Dataset(datasetID).Table(tableID)
+	//
+	//// Create a channel to receive log entries
+	//logChannel := make(chan LogEntry)
+	//
+	//// Start a Go routine to process logs from the channel
+	//go func() {
+	//	for logEntry := range logChannel {
+	//		// Insert the log entry into BigQuery
+	//		inserter := table.Inserter()
+	//		if err := inserter.Put(ctx, logEntry); err != nil {
+	//			log.Printf("Failed to insert log into BigQuery: %v", err)
+	//		} else {
+	//			fmt.Println("Log uploaded to BigQuery successfully!")
+	//		}
+	//	}
+	//}()
+	//// Simulate infinite log generation
+	//go generateLogs(logChannel)
+	//
+	//// Prevent the main function from exiting
+	//select {}
 }
 
 func generateLogs(logChannel chan LogEntry) {
