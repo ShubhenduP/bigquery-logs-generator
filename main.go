@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"os"
 	"time"
 )
 
@@ -21,14 +20,14 @@ func main() {
 	ctx := context.Background()
 
 	// Create a BigQuery client using default credentials
-	client, err := bigquery.NewClient(ctx, os.Getenv("PROJECT"))
+	client, err := bigquery.NewClient(ctx, "qa-target")
 	if err != nil {
 		log.Fatalf("Failed to create BigQuery client: %v", err)
 	}
 	defer client.Close()
 
-	datasetID := os.Getenv("DATASET")
-	tableID := os.Getenv("TABLE")
+	datasetID := "test_dataset"
+	tableID := "logEntries"
 	table := client.Dataset(datasetID).Table(tableID)
 
 	// Create a channel to receive log entries

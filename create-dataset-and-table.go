@@ -20,7 +20,7 @@ func CreateDatasetAndTable() {
 	}
 
 	// Create a dataset
-	datasetID := "test-dataset"
+	datasetID := "test_dataset"
 	if err := createDataset(client, datasetID); err != nil {
 		log.Fatalf("Failed to create dataset: %v", err)
 	}

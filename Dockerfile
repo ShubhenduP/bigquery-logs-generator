@@ -13,7 +13,9 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o main .
+RUN GOOS=linux GOARCH=amd64 go build -o main .
+
+RUN chmod +x ./main
 
 # Command to run the executable
 CMD ["./main"]
