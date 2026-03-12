@@ -44,6 +44,7 @@ pipeline:
                         templateInputs:
                           type: Application
                           serviceRef: <+service.identifier>
+                          gitBranch: test-branch
                     spec:
                       sensitivity: HIGH
                       duration: 5m
