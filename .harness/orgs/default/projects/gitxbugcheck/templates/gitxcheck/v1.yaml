@@ -1,0 +1,41 @@
+template:
+  name: gitx-check
+  identifier: gitxcheck
+  versionLabel: v1
+  type: MonitoredService
+  projectIdentifier: gitxbugcheck
+  orgIdentifier: default
+  tags: {}
+  spec:
+    serviceRef: svc
+    environmentRef: env
+    type: Application
+    sources:
+      healthSources:
+        - type: Dynatrace
+          identifier: dynahs
+          name: dyna-hs
+          spec:
+            connectorRef: dynametrics
+            serviceId: ""
+            serviceName: ""
+            feature: dynatrace_apm
+            metricPacks: []
+            metricDefinitions:
+              - identifier: Dynatrace_metric
+                metricName: Dynatrace metric
+                groupName: g1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_Other
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                isManualQuery: true
+                metricSelector: builtin:containers.cpu.usagePercent
+                filters: []
