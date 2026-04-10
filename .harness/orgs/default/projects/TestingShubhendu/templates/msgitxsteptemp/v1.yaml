@@ -1,0 +1,51 @@
+template:
+  name: ms-gitx-step-temp
+  identifier: msgitxsteptemp
+  versionLabel: v1
+  type: Step
+  projectIdentifier: TestingShubhendu
+  orgIdentifier: default
+  tags: {}
+  spec:
+    type: Verify
+    timeout: 2h
+    spec:
+      isMultiServicesOrEnvs: false
+      type: Rolling
+      monitoredService:
+        type: Template
+        spec:
+          monitoredServiceTemplateRef: Testing_Service_as_Expression
+          versionLabel: v1
+          templateInputs:
+            type: Application
+            serviceRef: <+input>
+            environmentRef: <+input>
+            variables:
+              - name: service_name
+                type: String
+                value: <+input>
+      spec:
+        sensitivity: HIGH
+        duration: 15m
+    failureStrategies:
+      - onFailure:
+          errors:
+            - Verification
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: StageRollback
+      - onFailure:
+          errors:
+            - Unknown
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: Ignore
