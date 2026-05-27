@@ -1,0 +1,43 @@
+template:
+  name: org-remote-fix
+  identifier: orgremotefix
+  versionLabel: v1
+  type: MonitoredService
+  orgIdentifier: default
+  tags: {}
+  spec:
+    serviceRef: org.svc_tc_11
+    environmentRef: org.og_env
+    type: Application
+    sources:
+      healthSources:
+        - type: Prometheus
+          identifier: orgremoteconn
+          name: org-remote-conn
+          spec:
+            connectorRef: account.prometheus_connector
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: avg(up{job="cv-datagen"})
+                envFilter: []
+                additionalFilters: []
+                groupName: v1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_ResponseTime
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: instance
+            metricPacks:
+              - identifier: Custom
+                metricThresholds: []
