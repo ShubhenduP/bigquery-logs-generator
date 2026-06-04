@@ -1,6 +1,6 @@
 monitoredService:
   orgIdentifier: default
-  projectIdentifier: gitxtest
+  projectIdentifier: TestAcct
   identifier: svcinline_envinline
   name: svcinline_envinline
   type: Application
