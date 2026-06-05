@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: realsvc_realenv
+  name: realsvc_realenv
+  type: Application
+  description: ""
+  serviceRef: realsvc
+  environmentRef: realenv
+  environmentRefList:
+  - realenv
+  sources: {}
+  enabled: false
