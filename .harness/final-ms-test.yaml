@@ -16,6 +16,8 @@ monitoredService:
       type: Prometheus
       spec:
         connectorRef: promconn
+        metricPacks:
+        - identifier: Custom
         metricDefinitions:
         - identifier: prometheus_metric
           metricName: Prometheus Metric
@@ -39,10 +41,11 @@ monitoredService:
               - ACT_WHEN_HIGHER
           sli:
             enabled: false
-          query: "avg(up{job=\"prometheus\",job=\"prometheus\"})"
+          query: "avg(\n\tscrape_duration_seconds\t{\n\n\t\tjob=\"prometheus\",\n\t\
+            \tjob=\"prometheus\"\n\n})"
           groupName: test
           serviceInstanceFieldName: instance
-          prometheusMetric: up
+          prometheusMetric: scrape_duration_seconds
           serviceFilter:
           - labelName: job
             labelValue: prometheus
