@@ -9,5 +9,46 @@ monitoredService:
   environmentRef: realenv
   environmentRefList:
   - realenv
-  sources: {}
+  sources:
+    healthSources:
+    - name: prom-hs
+      identifier: promhs
+      type: Prometheus
+      spec:
+        connectorRef: promconn
+        metricDefinitions:
+        - identifier: prometheus_metric
+          metricName: Prometheus Metric
+          riskProfile:
+            category: Performance
+            metricType: OTHER
+            riskCategory: Performance_Other
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceFieldName: instance
+            riskProfile:
+              category: Performance
+              metricType: OTHER
+              riskCategory: Performance_Other
+              thresholdTypes:
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          query: "avg(up{job=\"prometheus\",job=\"prometheus\"})"
+          groupName: test
+          serviceInstanceFieldName: instance
+          prometheusMetric: up
+          serviceFilter:
+          - labelName: job
+            labelValue: prometheus
+          envFilter:
+          - labelName: job
+            labelValue: prometheus
+          aggregation: avg
+          isManualQuery: false
   enabled: false
