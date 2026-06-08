@@ -52,6 +52,6 @@ monitoredService:
           envFilter:
           - labelName: job
             labelValue: prometheus
-          aggregation: min
+          aggregation: sum
           isManualQuery: false
   enabled: false
