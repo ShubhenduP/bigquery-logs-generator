@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: svcinline_inlineenv001
+  name: svcinline_inlineenv001
+  type: Application
+  description: ""
+  serviceRef: svcinline
+  environmentRef: inlineenv001
+  environmentRefList:
+  - inlineenv001
+  sources: {}
+  enabled: false
