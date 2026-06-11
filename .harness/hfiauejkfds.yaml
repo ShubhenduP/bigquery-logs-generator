@@ -41,7 +41,7 @@ monitoredService:
               - ACT_WHEN_HIGHER
           sli:
             enabled: false
-          query: "avg(\n\tup\t{\n\n\t\tjob=\"cv-datagen\",\n\t\tjob=\"cv-datagen\"\
+          query: "count(\n\tup\t{\n\n\t\tjob=\"cv-datagen\",\n\t\tjob=\"cv-datagen\"\
             \n\n})"
           groupName: iojhu
           serviceInstanceFieldName: instance
@@ -52,6 +52,6 @@ monitoredService:
           envFilter:
           - labelName: job
             labelValue: cv-datagen
-          aggregation: avg
+          aggregation: count
           isManualQuery: false
   enabled: false
