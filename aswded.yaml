@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: realsvc_inlineenv001
+  name: realsvc_inlineenv001
+  type: Application
+  description: ""
+  serviceRef: realsvc
+  environmentRef: inlineenv001
+  environmentRefList:
+  - inlineenv001
+  sources: {}
+  enabled: false
