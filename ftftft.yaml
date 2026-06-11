@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: testinline_testenv
+  name: testinline_testenv
+  type: Application
+  description: ""
+  serviceRef: testinline
+  environmentRef: testenv
+  environmentRefList:
+  - testenv
+  sources: {}
+  enabled: false
