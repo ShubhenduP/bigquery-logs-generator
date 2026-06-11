@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: svcpromeremote_realenv
+  name: svcpromeremote_realenv
+  type: Application
+  description: ""
+  serviceRef: svcpromeremote
+  environmentRef: realenv
+  environmentRefList:
+  - realenv
+  sources: {}
+  enabled: false
