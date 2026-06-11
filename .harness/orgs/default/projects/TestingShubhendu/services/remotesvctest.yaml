@@ -1,0 +1,5 @@
+service:
+  name: remote-svc-test
+  identifier: remotesvctest
+  orgIdentifier: default
+  projectIdentifier: TestingShubhendu
