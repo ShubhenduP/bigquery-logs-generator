@@ -9,5 +9,49 @@ monitoredService:
   environmentRef: testinlineenv
   environmentRefList:
   - testinlineenv
-  sources: {}
+  sources:
+    healthSources:
+    - name: promQL
+      identifier: promQL
+      type: Prometheus
+      spec:
+        connectorRef: account.promeacc
+        metricPacks:
+        - identifier: Custom
+        metricDefinitions:
+        - identifier: prometheus_metric
+          metricName: Prometheus Metric
+          riskProfile:
+            category: Performance
+            metricType: OTHER
+            riskCategory: Performance_Other
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceFieldName: instance
+            riskProfile:
+              category: Performance
+              metricType: OTHER
+              riskCategory: Performance_Other
+              thresholdTypes:
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          query: "avg(\n\tup\t{\n\n\t\tjob=\"cv-datagen\",\n\t\tjob=\"cv-datagen\"\
+            \n\n})"
+          groupName: iojhu
+          serviceInstanceFieldName: instance
+          prometheusMetric: up
+          serviceFilter:
+          - labelName: job
+            labelValue: cv-datagen
+          envFilter:
+          - labelName: job
+            labelValue: cv-datagen
+          aggregation: avg
+          isManualQuery: false
   enabled: false
