@@ -1,0 +1,43 @@
+template:
+  name: test-remote-v1-org
+  identifier: testremotev1org
+  versionLabel: v1
+  type: MonitoredService
+  orgIdentifier: default
+  tags: {}
+  spec:
+    serviceRef: orgremotesvc
+    environmentRef: orgremoteenv
+    type: Application
+    sources:
+      healthSources:
+        - type: Prometheus
+          identifier: promecv01org
+          name: prome-cv-01-org
+          spec:
+            connectorRef: org.promeorgcheck
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: (sum(rate(http_server_request_duration_seconds_count{k8s_namespace_name="online-boutique",http_response_status_code!~"5.."}[5m])) / sum(rate(http_server_request_duration_seconds_count{k8s_namespace_name="online-boutique"}[5m]))) * 100
+                envFilter: []
+                additionalFilters: []
+                groupName: G1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_ResponseTime
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: instance
+            metricPacks:
+              - identifier: Custom
+                metricThresholds: []
