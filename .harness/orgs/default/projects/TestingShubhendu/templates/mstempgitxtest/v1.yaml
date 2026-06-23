@@ -1,0 +1,42 @@
+template:
+  name: ms-temp-gitx-test
+  identifier: mstempgitxtest
+  versionLabel: v1
+  type: MonitoredService
+  projectIdentifier: TestingShubhendu
+  orgIdentifier: default
+  tags: {}
+  spec:
+    serviceRef: ddgmetricssvc
+    environmentRef: cfdenv
+    type: Application
+    sources:
+      healthSources:
+        - type: Dynatrace
+          identifier: dyna
+          name: dyna
+          spec:
+            connectorRef: org.dynaorgclassic1
+            serviceId: ""
+            serviceName: ""
+            feature: dynatrace_apm
+            metricPacks: []
+            metricDefinitions:
+              - identifier: Dynatrace_metric
+                metricName: Total Errors
+                groupName: Errors
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_Other
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                isManualQuery: true
+                metricSelector: builtin:service.errors.total.rate
+                filters: []
+                serviceInstanceIdentifier: dt.entity.service

@@ -1,0 +1,42 @@
+template:
+  name: Combo-temp-case
+  identifier: Combotempcase
+  versionLabel: v1
+  type: MonitoredService
+  tags: {}
+  spec:
+    serviceRef: account.TemplateSvc
+    environmentRef: account.abcenvmt001
+    type: Application
+    sources:
+      healthSources:
+        - type: Prometheus
+          identifier: v1comboprom
+          name: v1-combo-prom
+          spec:
+            connectorRef: account.promeacccheck
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: avg(up{job="cv-datagen"})
+                envFilter: []
+                additionalFilters: []
+                groupName: G1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_ResponseTime
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: instance
+            metricPacks:
+              - identifier: Custom
+                metricThresholds: []

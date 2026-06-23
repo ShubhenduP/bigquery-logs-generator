@@ -1,0 +1,42 @@
+template:
+  name: remote-mts
+  identifier: remotemts
+  versionLabel: v1
+  type: MonitoredService
+  tags: {}
+  spec:
+    serviceRef: testsvc
+    environmentRef: testenv
+    type: Application
+    sources:
+      healthSources:
+        - type: Prometheus
+          identifier: promermt
+          name: prome-rmt
+          spec:
+            connectorRef: account.promeacc
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: avg(up{job="cv-datagen"})
+                envFilter: []
+                additionalFilters: []
+                groupName: G1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_ResponseTime
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: instance
+            metricPacks:
+              - identifier: Custom
+                metricThresholds: []

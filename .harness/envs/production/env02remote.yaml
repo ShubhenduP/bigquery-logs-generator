@@ -1,0 +1,6 @@
+environment:
+  name: env-02-remote
+  identifier: env02remote
+  description: ""
+  tags: {}
+  type: Production
