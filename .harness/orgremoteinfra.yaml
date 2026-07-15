@@ -1,0 +1,12 @@
+infrastructureDefinition:
+  name: org-remote-infra
+  identifier: orgremoteinfra
+  orgIdentifier: default
+  environmentRef: orgremoteenv
+  deploymentType: Kubernetes
+  type: KubernetesDirect
+  spec:
+    connectorRef: account.k8sConnector
+    namespace: default
+    releaseName: release-<+INFRA_KEY_SHORT_ID>
+  allowSimultaneousDeployments: true

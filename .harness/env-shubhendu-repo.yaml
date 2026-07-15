@@ -1,0 +1,8 @@
+environment:
+  name: env-shubhendu-repo
+  identifier: envshubhendurepo
+  description: ""
+  tags: {}
+  type: Production
+  orgIdentifier: default
+  projectIdentifier: gitxtest

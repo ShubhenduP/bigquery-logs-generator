@@ -1,0 +1,44 @@
+template:
+  name: test-mt-gitx-sandeep
+  identifier: testmtgitxsandeep
+  versionLabel: v1
+  type: MonitoredService
+  projectIdentifier: TestingShubhendu
+  orgIdentifier: default
+  tags: {}
+  spec:
+    serviceRef: testsandeesvcmt
+    environmentRef: testsandeepenvmt
+    type: Application
+    sources:
+      healthSources:
+        - type: Prometheus
+          identifier: v1prom
+          name: v1-prom
+          spec:
+            connectorRef: account.prometheus_connector
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: avg(up{job="cv-datagen"})
+                envFilter: []
+                additionalFilters: []
+                groupName: G1
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_ResponseTime
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: instance
+            metricPacks:
+              - identifier: Custom
+                metricThresholds: []

@@ -1,0 +1,68 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: sandeepttestQA
+  identifier: uibug2_dev
+  name: uibug2_dev
+  type: Application
+  description: ""
+  serviceRef: uibug2
+  environmentRef: dev
+  environmentRefList:
+  - dev
+  tags:
+    ui: ""
+  sources:
+    healthSources:
+    - name: custom-health-ms
+      identifier: customhealthms
+      type: CustomHealthMetric
+      spec:
+        connectorRef: customhealthmock
+        metricDefinitions:
+        - identifier: CustomHealth_Metric
+          metricName: CustomHealth Metric
+          riskProfile:
+            category: Performance
+            metricType: RESP_TIME
+            riskCategory: Performance_ResponseTime
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceMetricPath: "$.[*].['metricPath']"
+            riskProfile:
+              category: Performance
+              metricType: RESP_TIME
+              riskCategory: Performance_ResponseTime
+              thresholdTypes:
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          requestDefinition:
+            urlPath: metrics
+            requestBody: "{\"start\":\"start_time\",\"end\":\"end_time\"}"
+            method: POST
+            startTimeInfo:
+              placeholder: start_time
+              timestampFormat: SECONDS
+              customTimestampFormat: ""
+            endTimeInfo:
+              placeholder: end_time
+              timestampFormat: SECONDS
+              customTimestampFormat: ""
+          queryType: HOST_BASED
+          metricResponseMapping:
+            metricValueJsonPath: "$.[*].['metricValues'].[*].['value']"
+            timestampJsonPath: "$.[*].['metricValues'].[*].['startTimeInMillis']"
+            serviceInstanceJsonPath: "$.[*].['metricPath']"
+            serviceInstanceListJsonPath: $
+            relativeMetricListJsonPath: "['metricValues']"
+            relativeTimestampJsonPath: "['startTimeInMillis']"
+            relativeMetricValueJsonPath: "['value']"
+            relativeServiceInstanceValueJsonPath: "['metricPath']"
+            timestampFormat: Milliseconds
+          groupName: custom_group
+  enabled: false
