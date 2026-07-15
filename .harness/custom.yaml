@@ -18,6 +18,19 @@ monitoredService:
       type: CustomHealthMetric
       spec:
         connectorRef: customhealthmock
+        metricPacks:
+        - identifier: Custom
+          metricThresholds:
+          - metricName: CustomHealth Metric
+            metricType: Custom
+            spec:
+              action: FailImmediately
+              spec: {}
+            criteria:
+              type: Absolute
+              spec:
+                greaterThan: 0.0
+            type: FailImmediately
         metricDefinitions:
         - identifier: CustomHealth_Metric
           metricName: CustomHealth Metric
