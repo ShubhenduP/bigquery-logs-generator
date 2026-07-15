@@ -27,9 +27,9 @@ monitoredService:
               action: FailImmediately
               spec: {}
             criteria:
-              type: Absolute
+              type: Percentage
               spec:
-                greaterThan: 0.0
+                greaterThan: 5.0
             type: FailImmediately
         metricDefinitions:
         - identifier: CustomHealth_Metric
