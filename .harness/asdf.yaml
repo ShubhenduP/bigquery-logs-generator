@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: test
+  identifier: stf_test_svc_test
+  name: stf_test_svc_test
+  type: Application
+  description: ""
+  serviceRef: stf_test_svc
+  environmentRef: test
+  environmentRefList:
+  - test
+  sources: {}
+  enabled: false
