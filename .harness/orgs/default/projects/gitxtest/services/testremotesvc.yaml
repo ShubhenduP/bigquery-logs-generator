@@ -1,0 +1,3 @@
+service:
+  name: test-remote-svc
+  identifier: testremotesvc
