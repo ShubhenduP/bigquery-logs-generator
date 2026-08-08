@@ -1,0 +1,87 @@
+pipeline:
+  name: service-passon-test
+  identifier: servicepassontest
+  projectIdentifier: TestingShubhendu
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: CDS
+        identifier: CDS
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: dyna
+          environment:
+            environmentRef: cfdenv
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: cfdinfra
+          execution:
+            steps:
+              - step:
+                  name: Rollout Deployment
+                  identifier: rolloutDeployment
+                  type: K8sRollingDeploy
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+              - step:
+                  type: Verify
+                  name: Verify
+                  identifier: Verify
+                  spec:
+                    isMultiServicesOrEnvs: false
+                    type: Rolling
+                    monitoredService:
+                      type: Template
+                      spec:
+                        monitoredServiceTemplateRef: Testing_Service_as_Expression
+                        versionLabel: v1
+                        templateInputs:
+                          type: Application
+                          serviceRef: <+service.identifier>
+                          gitBranch: test-branch
+                    spec:
+                      sensitivity: HIGH
+                      duration: 5m
+                  timeout: 2h
+                  failureStrategies:
+                    - onFailure:
+                        errors:
+                          - Verification
+                        action:
+                          type: ManualIntervention
+                          spec:
+                            timeout: 2h
+                            onTimeout:
+                              action:
+                                type: StageRollback
+                    - onFailure:
+                        errors:
+                          - Unknown
+                        action:
+                          type: ManualIntervention
+                          spec:
+                            timeout: 2h
+                            onTimeout:
+                              action:
+                                type: Ignore
+            rollbackSteps:
+              - step:
+                  name: Rollback Rollout Deployment
+                  identifier: rollbackRolloutDeployment
+                  type: K8sRollingRollback
+                  timeout: 10m
+                  spec:
+                    pruningEnabled: false
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback

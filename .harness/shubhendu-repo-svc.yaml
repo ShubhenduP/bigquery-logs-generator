@@ -1,0 +1,3 @@
+service:
+  name: shubhendu-repo-svc
+  identifier: shubhendureposvc

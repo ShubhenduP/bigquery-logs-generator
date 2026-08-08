@@ -1,0 +1,7 @@
+service:
+  name: org-remote-svc
+  identifier: orgremotesvc
+  serviceDefinition:
+    spec: {}
+    type: Kubernetes
+  orgIdentifier: default

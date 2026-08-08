@@ -1,0 +1,7 @@
+environment:
+  name: org-remote-env
+  identifier: orgremoteenv
+  description: ""
+  tags: {}
+  type: Production
+  orgIdentifier: default

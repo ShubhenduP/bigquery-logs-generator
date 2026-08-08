@@ -1,0 +1,57 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: gitxtest
+  identifier: realsvc_realenv
+  name: realsvc_realenv
+  type: Application
+  description: ""
+  serviceRef: realsvc
+  environmentRef: realenv
+  environmentRefList:
+  - realenv
+  sources:
+    healthSources:
+    - name: prom-hs
+      identifier: promhs
+      type: Prometheus
+      spec:
+        connectorRef: promconn
+        metricPacks:
+        - identifier: Custom
+        metricDefinitions:
+        - identifier: prometheus_metric
+          metricName: Prometheus Metric
+          riskProfile:
+            category: Performance
+            metricType: OTHER
+            riskCategory: Performance_Other
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceFieldName: instance
+            riskProfile:
+              category: Performance
+              metricType: OTHER
+              riskCategory: Performance_Other
+              thresholdTypes:
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          query: "avg(\n\tscrape_duration_seconds\t{\n\n\t\tjob=\"prometheus\",\n\t\
+            \tjob=\"prometheus\"\n\n})"
+          groupName: test
+          serviceInstanceFieldName: instance
+          prometheusMetric: scrape_duration_seconds
+          serviceFilter:
+          - labelName: job
+            labelValue: prometheus
+          envFilter:
+          - labelName: job
+            labelValue: prometheus
+          aggregation: sum
+          isManualQuery: false
+  enabled: false
