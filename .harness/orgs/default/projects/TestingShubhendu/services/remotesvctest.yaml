@@ -3,3 +3,6 @@ service:
   identifier: remotesvctest
   orgIdentifier: default
   projectIdentifier: TestingShubhendu
+  serviceDefinition:
+    spec: {}
+    type: Kubernetes
