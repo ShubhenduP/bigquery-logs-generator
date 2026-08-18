@@ -24,11 +24,22 @@ monitoredService:
           - metricName: CustomHealth Metric
             metricType: Custom
             spec:
+              action: Ignore
+            criteria:
+              type: Absolute
+              spec:
+                lessThan: 15.0
+                greaterThan: 12.0
+            type: IgnoreThreshold
+          - metricName: CustomHealth Metric
+            metricType: Custom
+            spec:
               action: FailImmediately
               spec: {}
             criteria:
-              type: Percentage
+              type: Absolute
               spec:
+                lessThan: 20.0
                 greaterThan: 15.0
             type: FailImmediately
         metricDefinitions:
