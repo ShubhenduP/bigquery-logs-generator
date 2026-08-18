@@ -29,7 +29,7 @@ monitoredService:
             criteria:
               type: Percentage
               spec:
-                greaterThan: 5.0
+                greaterThan: 15.0
             type: FailImmediately
         metricDefinitions:
         - identifier: CustomHealth_Metric
